@@ -5,7 +5,7 @@
   let loading = true;
   let maybeQuote = "";
   let nopeQuote = "";
-  
+
   const maybeQuotes = [
     "Maybe today?",
     "There's a chance!",
@@ -22,6 +22,10 @@
     "Don't get your hopes up.",
     "It's a long shot."
   ]
+  let neowsLetterLink = {
+    title: "Latest News",
+    link: "https://megacrit.com/news/"
+  };
 
   onMount(async () => {
     // get the current day of the week id thurs as a number 0-6
@@ -31,6 +35,11 @@
     maybeQuote = maybeQuotes[Math.floor(Math.random() * maybeQuotes.length)];
     nopeQuote = nopeQuotes[Math.floor(Math.random() * nopeQuotes.length)];
 
+    try {
+      neowsLetterLink = await (await fetch("./api/news/")).json();
+    } catch (e) {
+      console.error(e);
+    }
     // delay for 2 seconds
     await new Promise((resolve) => setTimeout(resolve, 2000));
     loading = false;
@@ -53,11 +62,10 @@
           <span>{nopeQuote}</span>
       {/if}
 
+      <a href="{neowsLetterLink.link}" target="_blank">{neowsLetterLink.title}</a>
     {:else}
       <span>Thinking...</span>
     {/if}
-    
-    <a href="https://megacrit.com/news/" target="_blank">Read the latest Neow's Letter</a>
   </div>
 
 </section>
