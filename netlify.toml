@@ -1,0 +1,5 @@
+[build]
+  base = ""
+  publish = "build"
+  functions = "functions"
+  command = "npm install && npm run build"
